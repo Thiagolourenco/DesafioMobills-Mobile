@@ -1,77 +1,84 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
   ImageBackground,
   KeyboardAvoidingView,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import firebase from 'react-native-firebase';
 
 import {
   Container,
   Form,
-  FormInput,
   Input,
+  ButtonEntrar,
   ButtonText,
   ButtonCadastro,
   Title,
 } from './style';
 
-class SignUp extends Component {
-  state = {
-    displayName: '',
-    email: '',
-    password: '',
-  };
+function SignUp({navigation}) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  handleCreateUser = async () => {
-    const {displayName, email, password} = this.state;
-    const {navigation} = this.props;
-
-    await firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(userInfo => {
-        setTimeout(() => {
-          userInfo.user.updateProfile({displayName: displayName.trim()});
-          navigation.navigate('Login');
-        }, 3000);
-      });
-  };
-  render() {
-    const {displayName, email, password} = this.state;
-    return (
-      <Container>
-        <Title>CADASTRO</Title>
-        <Form>
-          <Input
-            placeholder="Seu Nome"
-            value={displayName}
-            onChange={text => this.setState({displayName: text})}
-            placeholderTextColor="#000"
-          />
-          <Input
-            placeholder="Seu e-mail"
-            value={email}
-            onChange={text => this.setState({email: text})}
-            placeholderTextColor="#000"
-          />
-          <Input
-            placeholder="*******"
-            placeholderTextColor="#000"
-            value={password}
-            onChange={text => this.setState({password: text})}
-            secureTextEntry={true}
-          />
-
-          <ButtonCadastro onPress={() => this.handleCreateUser()}>
-            <ButtonText>CADASTRAR</ButtonText>
-          </ButtonCadastro>
-        </Form>
-      </Container>
-    );
+  function handleRegisterUser() {
+    setLoading(true);
+    try {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(users => {
+          users.user.updateProfile({displayName: displayName.trim()});
+          setTimeout(() => {
+            setLoading(false);
+            navigation.navigate('Login');
+          }, 3000);
+        })
+        .catch(error => alert(error));
+    } catch (e) {
+      alert(e);
+    }
   }
+
+  return (
+    <Container>
+      <Title>CADASTRO</Title>
+      <Form>
+        <Input
+          placeholder="Seu Nome"
+          value={displayName}
+          onChangeText={text => setDisplayName(text)}
+          placeholderTextColor="#000"
+        />
+        <Input
+          placeholder="Seu e-mail"
+          value={email}
+          onChangeText={text => setEmail(text)}
+          placeholderTextColor="#000"
+        />
+        <Input
+          placeholder="*******"
+          placeholderTextColor="#000"
+          value={password}
+          onChangeText={text => setPassword(text)}
+          secureTextEntry
+        />
+
+        <ButtonCadastro onPress={handleRegisterUser}>
+          {loading ? (
+            <ActivityIndicator size={16} color="#fff" />
+          ) : (
+            <ButtonText>CADASTRAR</ButtonText>
+          )}
+        </ButtonCadastro>
+      </Form>
+    </Container>
+  );
 }
 
 export default SignUp;

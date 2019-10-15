@@ -17,6 +17,8 @@ import {
 
 function Home({navigation}) {
   const [data, setData] = useState([]);
+  const [users, setUsers] = useState([]);
+
   const ref = firebase.firestore().collection('despesa');
 
   useEffect(() => {
@@ -37,6 +39,11 @@ function Home({navigation}) {
     });
   }, []);
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      setUsers(user);
+    });
+  }, []);
   function handleCadastrar() {
     navigation.navigate('Register');
   }
@@ -47,6 +54,7 @@ function Home({navigation}) {
 
   return (
     <Container>
+      <Text style={{fontSize: 36}}>{users.displayName}</Text>
       <FlatList
         data={data}
         style={{flex: 1}}
