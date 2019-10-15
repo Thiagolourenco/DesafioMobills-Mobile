@@ -13,21 +13,14 @@ export const Form = styled.View`
   padding: 0 25px;
 `;
 
-export const FormInput = styled.View`
-  background-color: rgba(255, 255, 255, 0.85);
-  height: 54px;
-  flex-direction: row;
-  margin-top: 20px;
-  border-radius: 15px;
-  align-items: center;
-  padding-left: 10px;
-`;
-
 export const Input = styled.TextInput`
+  height: 54px;
+  background-color: rgba(255, 255, 255, 0.85);
   color: #000;
-  margin-left: 10px;
-  flex: 1;
-  font-size: 16px;
+  padding: 8px;
+  border-radius: 15px;
+  font-size: 18px;
+  margin-bottom: 15px;
 `;
 
 export const Title = styled.Text`
@@ -43,7 +36,7 @@ export const ButtonCadastro = styled.TouchableOpacity.attrs({
   height: 54px;
   justify-content: center;
   align-items: center;
-  border-radius: 50px;
+  border-radius: 15px;
   margin-top: 20px;
 `;
 

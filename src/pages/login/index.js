@@ -27,7 +27,7 @@ function Login({navigation}) {
   const [loading, setLoading] = useState(false);
 
   function handleRegister() {
-    navigation.navigate('RegisterUser');
+    navigation.navigate('SignUp');
   }
 
   function handleLogin() {

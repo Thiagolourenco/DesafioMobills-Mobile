@@ -5,12 +5,12 @@ import Register from './pages/register';
 import Updates from './pages/update';
 import ExampleDate from './pages/exampleDate';
 import Login from './pages/login';
-import RegisterUser from './pages/registerUser';
+import SignUp from './pages/signUp';
 
 const Routes = createAppContainer(
   createSwitchNavigator({
     Login,
-    RegisterUser,
+    SignUp,
     Home,
     Register,
     Updates,
