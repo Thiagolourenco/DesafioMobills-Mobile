@@ -70,3 +70,18 @@ export const InputDateText = styled.Text`
   font-size: 18px;
   padding: 8px;
 `;
+
+export const Success = styled.View`
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  border-radius: 15px;
+  height: 30px;
+  background-color: rgba(28, 124, 72, 0.94);
+`;
+
+export const TextSuccess = styled.Text`
+  font-size: 14px;
+  color: #fff;
+`;

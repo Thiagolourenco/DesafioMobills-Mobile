@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {View, Image, FlatList, Text} from 'react-native';
+import {View, Image, FlatList} from 'react-native';
 import firebase from 'react-native-firebase';
 
 import add from '../../assests/add.png';
-import arrowRight from '../../assests/right-arrow.png';
 
 import {
   Container,
   List,
   ListName,
   DateOfBirth,
-  ImageArrowRight,
   Title,
   ButtonAdd,
   Footer,
@@ -22,29 +20,39 @@ function Home({navigation}) {
 
   const ref = firebase.firestore().collection('despesa');
 
-  useEffect(() => {
-    return ref.onSnapshot(querySnapshot => {
-      const list = [];
-      querySnapshot.forEach(doc => {
-        const {diaCompra, descricao, name, pago, valor} = doc.data();
-        list.push({
-          id: doc.id,
-          diaCompra,
-          descricao,
-          name,
-          pago,
-          valor,
-        });
-      });
-      setData(list);
-    });
-  }, []);
+  /**
+   * Carrega dados das depesas, assim que o a tela home é iniciada
+   * Também é carregado, os dados do usuário como o Nome
+   */
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      setUsers(user);
-    });
+    function loadDespesas() {
+      return ref.onSnapshot(querySnapshot => {
+        const list = [];
+        querySnapshot.forEach(doc => {
+          const {diaCompra, descricao, name, pago, valor} = doc.data();
+          list.push({
+            id: doc.id,
+            diaCompra,
+            descricao,
+            name,
+            pago,
+            valor,
+          });
+        });
+        setData(list);
+      });
+    }
+    loadDespesas();
+
+    function userLoading() {
+      firebase.auth().onAuthStateChanged(user => {
+        setUsers(user);
+      });
+    }
+    userLoading();
   }, []);
+
   function handleCadastrar() {
     navigation.navigate('Register');
   }

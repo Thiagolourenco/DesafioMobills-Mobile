@@ -70,3 +70,11 @@ export const CadastrarText = styled.Text`
   font-weight: bold;
   margin-top: 120px;
 `;
+
+export const MessageError = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+  color: rgba(192, 69, 69, 0.94);
+`;

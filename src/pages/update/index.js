@@ -5,10 +5,12 @@ import {
   ActivityIndicator,
   DatePickerAndroid,
   Picker,
+  TouchableOpacity,
   Text,
 } from 'react-native';
 import firebase from 'react-native-firebase';
 
+import backArrow from '../../assests/left-arrow.png';
 import {
   Container,
   Title,
@@ -18,9 +20,9 @@ import {
   ButtonUpdate,
   ButtonRemove,
   TextButton,
+  ButtonBack,
   InputDate,
   InputDateText,
-  ButtonBack,
   Header,
   InputOp,
 } from './style';
@@ -137,6 +139,11 @@ class Updates extends Component {
     }, 3000);
   };
 
+  handleGoBack = () => {
+    const {navigation} = this.props;
+    navigation.navigate('Home');
+  };
+
   render() {
     const {navigation} = this.props;
     const id = navigation.getParam('id');
@@ -154,6 +161,9 @@ class Updates extends Component {
     return (
       <Container>
         <Header>
+          <ButtonBack onPress={this.handleGoBack}>
+            <Image source={backArrow} />
+          </ButtonBack>
           <Title>Info das Despesas</Title>
         </Header>
         <View>

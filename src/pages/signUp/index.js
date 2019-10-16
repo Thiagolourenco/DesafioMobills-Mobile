@@ -1,19 +1,11 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  ImageBackground,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import {ActivityIndicator} from 'react-native';
 import firebase from 'react-native-firebase';
 
 import {
   Container,
   Form,
   Input,
-  ButtonEntrar,
   ButtonText,
   ButtonCadastro,
   Title,
@@ -23,8 +15,11 @@ function SignUp({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
-  const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  /**
+   * Reliza o registro do usuário, para que o usuário possa realizar o login
+   */
 
   function handleRegisterUser() {
     setLoading(true);

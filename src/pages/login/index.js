@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  ImageBackground,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import {ActivityIndicator} from 'react-native';
 import firebase from 'react-native-firebase';
 
 import {
@@ -18,6 +11,7 @@ import {
   ButtonText,
   ButtonCadastro,
   Title,
+  MessageError,
 } from './style';
 
 function Login({navigation}) {
@@ -25,15 +19,22 @@ function Login({navigation}) {
   const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [messageError, setMessageError] = useState(false);
+  /**
+   * Navega usuários para a tela de SignUp
+   */
   function handleRegister() {
     navigation.navigate('SignUp');
   }
 
+  /**
+   * Realiza o login do usuário
+   */
+
   function handleLogin() {
     setLoading(true);
 
-    const user = firebase
+    firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() =>
@@ -43,7 +44,21 @@ function Login({navigation}) {
             setLoading(false);
         }, 3000),
       )
-      .catch(error => alert(error));
+      .catch(error => {
+        if (error.code == 'auth/wrong-password') {
+          setTimeout(() => {
+            setMessageError(true);
+            setLoading(false);
+          }, 3000);
+        }
+
+        if (error.code == 'auth/user-not-found') {
+          setTimeout(() => {
+            setMessageError(true);
+            setLoading(false);
+          }, 3000);
+        }
+      });
   }
 
   return (
@@ -77,6 +92,10 @@ function Login({navigation}) {
         <ButtonCadastro onPress={handleRegister}>
           <ButtonText>CADASTRAR</ButtonText>
         </ButtonCadastro>
+
+        {messageError ? (
+          <MessageError>Deu error, verifique seu email e senha</MessageError>
+        ) : null}
       </Form>
     </Container>
   );

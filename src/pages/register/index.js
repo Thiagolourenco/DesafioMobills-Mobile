@@ -11,6 +11,8 @@ import {
   InputDateText,
   ButtonAdicionar,
   ButtonText,
+  Success,
+  TextSuccess,
 } from './style';
 
 // import DateInput from '../../components/DateInput';
@@ -24,6 +26,10 @@ class Register extends Component {
     name: '',
     loading: false,
   };
+
+  /**
+   * Função para mostrar a Data no Dispositivo android, em formato de spinner
+   */
 
   showDatePicker = async () => {
     try {
@@ -43,6 +49,10 @@ class Register extends Component {
       alert(code, message);
     }
   };
+
+  /**
+   * Adiciona as Despesas, que o usuário deseja cadastrar
+   */
 
   handleAddDespesa = () => {
     const {name, desc, diaCompra, valor} = this.state;
@@ -71,7 +81,7 @@ class Register extends Component {
   };
 
   render() {
-    const {name, desc, valor, diaCompra, date, loading} = this.state;
+    const {name, desc, valor, diaCompra, date, loading, success} = this.state;
     return (
       <Container behavior={Platform.OS === 'ios' ? 'padding' : null}>
         <Content>

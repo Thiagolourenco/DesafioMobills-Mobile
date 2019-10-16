@@ -4,5 +4,5 @@ import {getDespesa} from './despesa';
 import {DespesaTypes} from '../ducks/despesa';
 
 export default function* rootSaga() {
-  return yield all([takeLatest(DespesaTypes.GES_DESPESA_REQUEST, getDespesa)]);
+  return yield all([takeLatest(DespesaTypes.GET_DESPESA_REQUEST, getDespesa)]);
 }
