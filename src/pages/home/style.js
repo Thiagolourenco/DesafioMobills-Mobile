@@ -56,3 +56,12 @@ export const Footer = styled.View`
   border-top-left-radius: 180px;
   border-top-right-radius: 180px;
 `;
+
+export const Title = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  align-self: flex-start;
+  margin-top: 10px;
+  margin-left: 10px;
+`;

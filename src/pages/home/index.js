@@ -11,6 +11,7 @@ import {
   ListName,
   DateOfBirth,
   ImageArrowRight,
+  Title,
   ButtonAdd,
   Footer,
 } from './style';
@@ -54,7 +55,7 @@ function Home({navigation}) {
 
   return (
     <Container>
-      <Text style={{fontSize: 36}}>{users.displayName}</Text>
+      <Title>Seja Bem-Vindo {users.displayName}</Title>
       <FlatList
         data={data}
         style={{flex: 1}}
