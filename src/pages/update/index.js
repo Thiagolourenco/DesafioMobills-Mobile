@@ -1,16 +1,8 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Image,
-  ActivityIndicator,
-  DatePickerAndroid,
-  Picker,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import {View, ActivityIndicator, DatePickerAndroid, Picker} from 'react-native';
 import firebase from 'react-native-firebase';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import backArrow from '../../assests/left-arrow.png';
 import {
   Container,
   Title,
@@ -162,7 +154,7 @@ class Updates extends Component {
       <Container>
         <Header>
           <ButtonBack onPress={this.handleGoBack}>
-            <Image source={backArrow} />
+            <Icon name="arrow-back" size={25} color="#fff" />
           </ButtonBack>
           <Title>Info das Despesas</Title>
         </Header>

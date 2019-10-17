@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {ActivityIndicator} from 'react-native';
+import {ActivityIndicator, Image} from 'react-native';
 import firebase from 'react-native-firebase';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
   Container,
@@ -13,6 +14,8 @@ import {
   Title,
   MessageError,
 } from './style';
+import avatar from '../../assests/avatar.png';
+import lock from '../../assests/lock.png';
 
 function Login({navigation}) {
   const [email, setEmail] = useState('');
@@ -66,6 +69,7 @@ function Login({navigation}) {
       <Title>LOGIN</Title>
       <Form>
         <FormInput>
+          <Icon name="person" size={20} color="#000" />
           <Input
             placeholder="Seu e-mail"
             value={email}
@@ -74,6 +78,7 @@ function Login({navigation}) {
           />
         </FormInput>
         <FormInput>
+          <Icon name="lock" size={20} color="#000" />
           <Input
             placeholder="*******"
             placeholderTextColor="#000"

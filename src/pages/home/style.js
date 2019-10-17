@@ -61,7 +61,10 @@ export const Title = styled.Text`
   font-size: 14px;
   font-weight: bold;
   color: #fff;
-  align-self: flex-start;
+`;
+
+export const ButtonLogout = styled.TouchableOpacity`
   margin-top: 10px;
   margin-left: 10px;
+  align-self: flex-start;
 `;

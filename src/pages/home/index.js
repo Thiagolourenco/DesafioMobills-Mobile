@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {View, Image, FlatList} from 'react-native';
+import {View, Image, FlatList, TouchableOpacity, Text} from 'react-native';
 import firebase from 'react-native-firebase';
+import {format} from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
-import add from '../../assests/add.png';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
   Container,
@@ -12,6 +14,7 @@ import {
   Title,
   ButtonAdd,
   Footer,
+  ButtonLogout,
 } from './style';
 
 function Home({navigation}) {
@@ -44,14 +47,13 @@ function Home({navigation}) {
       });
     }
     loadDespesas();
-
-    function userLoading() {
-      firebase.auth().onAuthStateChanged(user => {
-        setUsers(user);
-      });
-    }
-    userLoading();
   }, []);
+
+  function handleLogout() {
+    setTimeout(() => {
+      navigation.navigate('Login');
+    }, 2000);
+  }
 
   function handleCadastrar() {
     navigation.navigate('Register');
@@ -63,7 +65,9 @@ function Home({navigation}) {
 
   return (
     <Container>
-      <Title>Seja Bem-Vindo {users.displayName}</Title>
+      <ButtonLogout onPress={handleLogout}>
+        <Title>SAIR</Title>
+      </ButtonLogout>
       <FlatList
         data={data}
         style={{flex: 1}}
@@ -71,7 +75,7 @@ function Home({navigation}) {
           <List onPress={() => handleUpdate(item.id)}>
             <View>
               <ListName>Nome: {item.name}</ListName>
-              <DateOfBirth>Data da Compra: {item.diaCompra}</DateOfBirth>
+              <DateOfBirth>Descrição: {item.descricao}</DateOfBirth>
             </View>
           </List>
         )}
@@ -79,7 +83,7 @@ function Home({navigation}) {
 
       <Footer>
         <ButtonAdd onPress={handleCadastrar}>
-          <Image source={add} />
+          <Icon name="add" size={32} color="#fff" />
         </ButtonAdd>
       </Footer>
     </Container>

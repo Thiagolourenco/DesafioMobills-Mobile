@@ -1,89 +1,60 @@
 import React, {useState} from 'react';
-import {Text, ActivityIndicator, View, DatePickerAndroid} from 'react-native';
-import firebase from 'react-native-firebase';
-
-import {
-  Container,
-  Content,
-  TituloAdd,
-  Input,
-  InputDate,
-  InputDateText,
-  ButtonAdicionar,
-  ButtonText,
-  TextIn,
-} from './style';
-
+import {Text, DatePickerAndroid} from 'react-native';
 import DateInput from '../../components/DateInput';
 
-function ExampleDate({navigation}) {
-  const [name, setName] = useState('');
-  const [desc, setDesc] = useState('');
-  const [valor, setValor] = useState('');
-  const [diaCompra, setDiaCompra] = useState(new Date());
-  const [dataCompra, setDataCompra] = useState('Data Da Compra');
-  const [loading, setLoading] = useState(false);
-  const [dataNova, setDataNova] = useState('');
+import {Container, Content, InputDate, InputDateText} from './style';
+import {format} from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
-  const ref = firebase.firestore().collection('despesa');
+function ExampleDate() {
+  const [date, setDate] = useState(new Date());
+  const [dataDia, setDataDia] = useState('');
 
-  async function showDatePicker(options) {
-    try {
-      const {action, year, month, day} = await DatePickerAndroid.open({
-        // Use `new Date()` for current date.
-        // May 25 2020. Month 0 is January.
-        mode: 'spinner',
-        date: new Date(),
-      });
-      if (action !== DatePickerAndroid.dismissedAction) {
-        let date = new Date(year, month, day);
-        let newDate = {};
+  // async function handleDate() {
+  //   try {
+  //     const {action, year, month, day} = await DatePickerAndroid.open({
+  //       mode: 'spinner',
+  //     });
 
-        newDate['date'] = date;
-        // Selected year, month (0-11), day
-        setDataCompra(newDate);
-      }
-    } catch ({code, message}) {
-      alert(message);
-    }
-  }
+  //     if (action !== DatePickerAndroid.dismissedAction) {
+  //       let dado = new Date(year, month, day);
+  //       let newDate = {};
 
-  async function handleAddDespesa() {}
-
+  //       newDate['dado'] = dado;
+  //       newDate['dataDia'] = dado.toLocaleDateString('en-US');
+  //       setDado(newDate);
+  //     }
+  //   } catch (error) {
+  //     alert(error.code);
+  //   }
+  // }
   return (
-    <Container behavior={Platform.OS === 'ios' ? 'padding' : null}>
+    <Container>
       <Content>
-        <TituloAdd>ADICIONAR DESPESA</TituloAdd>
-        <Input
-          placeholder="Nome da Despesa"
-          placeholderTextColor="#000"
-          value={name}
-          onChangeText={text => setName(text)}
-        />
-        <Input
-          placeholder="Descrição"
-          placeholderTextColor="#000"
-          value={desc}
-          onChangeText={text => setDesc(text)}
-        />
-        <Input
-          placeholder="Valor"
-          placeholderTextColor="#000"
-          value={valor}
-          keyboardType={'numeric'}
-          onChangeText={text => setValor(text)}
-        />
-
-        <InputDate onPress={showDatePicker}>
-          <InputDateText>{dataCompra}</InputDateText>
-        </InputDate>
-
-        <ButtonAdicionar onPress={handleAddDespesa}>
-          <ButtonText>ADICIONAR</ButtonText>
-        </ButtonAdicionar>
+        <Text>
+          {JSON.stringify(format(date, "dd 'de' MMMM 'de' yyyy", {locale: pt}))}
+        </Text>
+        <DateInput date={date} onChange={setDate} />
       </Content>
     </Container>
   );
 }
 
 export default ExampleDate;
+
+// try {
+//   const {action, year, month, day} = await DatePickerAndroid.open({
+//     mode: 'spinner',
+//   });
+
+//   if (action !== DatePickerAndroid.dismissedAction) {
+//     let date = new Date(year, month, day);
+//     let newDate = {};
+
+//     newDate['date'] = date;
+//     newDate['diaCompra'] = date.toLocaleDateString('en-US');
+//     this.setState(newDate);
+//   }
+// } catch ({code, message}) {
+//   alert(code, message);
+// }

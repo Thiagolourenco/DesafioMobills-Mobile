@@ -14,6 +14,7 @@ const Routes = createAppContainer(
     Home,
     Register,
     Updates,
+    // ExampleDate,
   }),
 );
 
