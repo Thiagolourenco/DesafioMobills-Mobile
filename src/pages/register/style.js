@@ -9,15 +9,6 @@ export const Content = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  /* backgroundColor: 'rgba(53,79,171,0.9)',
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-    margin: 20,
-    height: 533,
-    borderRadius: 5,
-    alignItems: 'stretch',
-    // justifyContent: 'center',
-    alignItems: 'center', */
 `;
 
 export const TituloAdd = styled.Text`
@@ -30,7 +21,7 @@ export const TituloAdd = styled.Text`
 
 export const Input = styled.TextInput`
   height: 51px;
-  width: 320px;
+  width: 380px;
   background-color: rgba(255, 255, 255, 0.85);
   color: #000;
   padding: 8px;
@@ -55,33 +46,4 @@ export const ButtonText = styled.Text`
   font-size: 16px;
   color: #fff;
   font-weight: bold;
-`;
-
-export const InputDate = styled.TouchableOpacity`
-  height: 51px;
-  width: 320px;
-  background-color: rgba(255, 255, 255, 0.85);
-  border-radius: 15px;
-  margin-bottom: 15px;
-`;
-
-export const InputDateText = styled.Text`
-  color: #000;
-  font-size: 18px;
-  padding: 8px;
-`;
-
-export const Success = styled.View`
-  margin-top: 10px;
-  justify-content: center;
-  align-items: center;
-  width: 250px;
-  border-radius: 15px;
-  height: 30px;
-  background-color: rgba(28, 124, 72, 0.94);
-`;
-
-export const TextSuccess = styled.Text`
-  font-size: 14px;
-  color: #fff;
 `;

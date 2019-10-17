@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
-import {View, ActivityIndicator, DatePickerAndroid, Picker} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, ActivityIndicator, Picker} from 'react-native';
 import firebase from 'react-native-firebase';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import DateInput from '../../components/DateInput';
+import {format} from 'date-fns';
 
 import {
   Container,
@@ -13,80 +15,56 @@ import {
   ButtonRemove,
   TextButton,
   ButtonBack,
-  InputDate,
-  InputDateText,
   Header,
   InputOp,
 } from './style';
 
-class Updates extends Component {
-  state = {
-    data: [],
-    name: '',
-    desc: '',
-    valor: '',
-    diaCompra: 'Dia Da Compra',
-    date: new Date(),
-    op: false,
-    loading: false,
-    loadingUp: false,
-    pago: null,
-  };
+function Updates({navigation}) {
+  const [name, setName] = useState('');
+  const [desc, setDesc] = useState('');
+  const [valor, setValor] = useState('');
+  const [diaCompra, setDiaCompra] = useState(new Date());
+  const [pago, setPago] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [loadingUp, setLoadingUp] = useState(false);
 
   /**
-   * Função para mostrar o calendario no android, para atualizar a
-   * a data de nascimento do cliente
+   * ID da despesa, para realizar a atualizar ou remover
    */
-
-  showDatePicker = async () => {
-    try {
-      const {action, year, month, day} = await DatePickerAndroid.open({
-        mode: 'spinner',
-      });
-
-      if (action !== DatePickerAndroid.dismissedAction) {
-        let date = new Date(year, month, day);
-        let newDate = {};
-
-        newDate['date'] = date;
-        newDate['diaCompra'] = date.toLocaleDateString('en-US');
-        this.setState(newDate);
-      }
-    } catch ({code, message}) {
-      alert(code, message);
-    }
-  };
+  const id = navigation.getParam('id');
 
   /**
    * Carrega os dados do cliente, através do id
    */
-  async componentDidMount() {
-    const {navigation} = this.props;
-    const id = navigation.getParam('id');
 
+  useEffect(() => {
     const ref = firebase
       .firestore()
       .collection('despesa')
       .doc(id);
     ref.get().then(doc => {
-      this.setState({
-        name: doc.data().name,
-        desc: doc.data().descricao,
-        valor: doc.data().valor,
-        diaCompra: doc.data().diaCompra,
-        pago: doc.data().pago,
-      });
+      setName(doc.data().name);
+      setDesc(doc.data().descricao);
+      setValor(doc.data().valor);
+      setDiaCompra(format(doc.data().diaCompra, "dd 'de' MMMM 'de' yyyy"));
+      setPago(doc.data().pago);
     });
-  }
+  }, []);
+
   /**
-   * Delete o cliente, atráves do ID
+   * Volta Para a tela de HOME
    */
 
-  handleDeleteDespesa = async id => {
-    const {navigation} = this.props;
-    this.setState({
-      loading: true,
-    });
+  function handleGoBack() {
+    navigation.navigate('Home');
+  }
+
+  /**
+   * Carrega os dados do cliente, através do id
+   */
+  async function handleRemoveDespesa(id) {
+    setLoading(true);
+
     await firebase
       .firestore()
       .collection('despesa')
@@ -94,23 +72,17 @@ class Updates extends Component {
       .delete();
 
     setTimeout(() => {
-      this.setState({
-        loading: false,
-      });
+      setLoading(false);
       navigation.navigate('Home');
     }, 3000);
-  };
+  }
 
   /*
    * Atualiza os Dados do cliente
    */
+  async function handleUpdateDespesa(id) {
+    setLoadingUp(true);
 
-  handleUpdateDespesa = async id => {
-    const {name, desc, valor, diaCompra, pago} = this.state;
-    const {navigation} = this.props;
-    this.setState({
-      loadingUp: true,
-    });
     await firebase
       .firestore()
       .collection('despesa')
@@ -124,102 +96,69 @@ class Updates extends Component {
       });
 
     setTimeout(() => {
-      this.setState({
-        loadingUp: false,
-      });
+      setLoadingUp(false);
       navigation.navigate('Home');
     }, 3000);
-  };
-
-  handleGoBack = () => {
-    const {navigation} = this.props;
-    navigation.navigate('Home');
-  };
-
-  render() {
-    const {navigation} = this.props;
-    const id = navigation.getParam('id');
-    const {
-      name,
-      valor,
-      desc,
-      diaCompra,
-      loading,
-      loadingUp,
-      date,
-      pago,
-    } = this.state;
-
-    return (
-      <Container>
-        <Header>
-          <ButtonBack onPress={this.handleGoBack}>
-            <Icon name="arrow-back" size={25} color="#fff" />
-          </ButtonBack>
-          <Title>Info das Despesas</Title>
-        </Header>
-        <View>
-          <TextIn>Nome da Despesa</TextIn>
-          <Input
-            value={name}
-            onChangeText={text => this.setState({name: text})}
-          />
-        </View>
-
-        <View>
-          <TextIn>Descrição</TextIn>
-          <Input
-            value={desc}
-            onChangeText={text => this.setState({desc: text})}
-          />
-        </View>
-
-        <View>
-          <TextIn>Valor</TextIn>
-          <Input
-            keyboardType={'numeric'}
-            value={valor}
-            onChangeText={text => this.setState({valor: text})}
-          />
-        </View>
-        <View>
-          <TextIn>Data da Compra</TextIn>
-
-          <InputDate onPress={() => this.showDatePicker({date})}>
-            <InputDateText>{diaCompra}</InputDateText>
-          </InputDate>
-        </View>
-        <View>
-          <TextIn>Pago</TextIn>
-          <InputOp
-            selectedValue={pago}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({pago: itemValue})
-            }>
-            <Picker.Item label="Escolha opção" value="" />
-            <Picker.Item label="SIM" value={true} />
-            <Picker.Item label="NÃO" value={false} />
-          </InputOp>
-        </View>
-        <GpButton>
-          <ButtonUpdate onPress={() => this.handleUpdateDespesa(id)}>
-            {loadingUp ? (
-              <ActivityIndicator size={16} color="#fff" />
-            ) : (
-              <TextButton>ATUALIZAR</TextButton>
-            )}
-          </ButtonUpdate>
-          <ButtonRemove onPress={() => this.handleDeleteDespesa(id)}>
-            {loading ? (
-              <ActivityIndicator size={16} color="#fff" />
-            ) : (
-              <TextButton>REMOVER</TextButton>
-            )}
-          </ButtonRemove>
-        </GpButton>
-      </Container>
-    );
   }
+
+  return (
+    <Container>
+      <Header>
+        <ButtonBack onPress={handleGoBack}>
+          <Icon name="arrow-back" size={25} color="#fff" />
+        </ButtonBack>
+        <Title>Info das Despesas</Title>
+      </Header>
+      <View>
+        <TextIn>Nome da Despesa</TextIn>
+        <Input value={name} onChangeText={text => setName(text)} />
+      </View>
+
+      <View>
+        <TextIn>Descrição</TextIn>
+        <Input value={desc} onChangeText={text => setDesc(text)} />
+      </View>
+
+      <View>
+        <TextIn>Valor</TextIn>
+        <Input
+          keyboardType={'numeric'}
+          value={valor}
+          onChangeText={text => setValor(text)}
+        />
+      </View>
+      <View>
+        <TextIn>Data da Compra</TextIn>
+        <DateInput date={diaCompra} onChange={setDiaCompra} />
+      </View>
+      <View>
+        <TextIn>Pago</TextIn>
+        <InputOp
+          selectedValue={pago}
+          onValueChange={(itemValue, itemIndex) => setPago(itemValue)}>
+          <Picker.Item label="Escolha opção" value="" />
+          <Picker.Item label="SIM" value={true} />
+          <Picker.Item label="NÃO" value={false} />
+        </InputOp>
+      </View>
+      <GpButton>
+        <ButtonUpdate onPress={() => handleUpdateDespesa(id)}>
+          {loadingUp ? (
+            <ActivityIndicator size={16} color="#fff" />
+          ) : (
+            <TextButton>ATUALIZAR</TextButton>
+          )}
+        </ButtonUpdate>
+        <ButtonRemove onPress={() => handleRemoveDespesa(id)}>
+          {loading ? (
+            <ActivityIndicator size={16} color="#fff" />
+          ) : (
+            <TextButton>REMOVER</TextButton>
+          )}
+        </ButtonRemove>
+      </GpButton>
+    </Container>
+  );
 }
 
 export default Updates;

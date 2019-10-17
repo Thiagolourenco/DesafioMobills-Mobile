@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Image, FlatList, TouchableOpacity, Text} from 'react-native';
+import {View, FlatList} from 'react-native';
 import firebase from 'react-native-firebase';
 import {format} from 'date-fns';
 import pt from 'date-fns/locale/pt';
@@ -10,7 +10,7 @@ import {
   Container,
   List,
   ListName,
-  DateOfBirth,
+  AmountExpense,
   Title,
   ButtonAdd,
   Footer,
@@ -19,7 +19,6 @@ import {
 
 function Home({navigation}) {
   const [data, setData] = useState([]);
-  const [users, setUsers] = useState([]);
 
   const ref = firebase.firestore().collection('despesa');
 
@@ -75,7 +74,7 @@ function Home({navigation}) {
           <List onPress={() => handleUpdate(item.id)}>
             <View>
               <ListName>Nome: {item.name}</ListName>
-              <DateOfBirth>Descrição: {item.descricao}</DateOfBirth>
+              <AmountExpense>Valor: R$ {item.valor}</AmountExpense>
             </View>
           </List>
         )}

@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {DatePickerAndroid} from 'react-native';
-// import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {format} from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
@@ -27,25 +27,9 @@ export default function DateInput({date, onChange}) {
   return (
     <Container>
       <DateButton onPress={handleOpenPicker}>
+        <Icon name="event" size={20} color="#000" />
         <DateText>{dateFormatted}</DateText>
       </DateButton>
     </Container>
   );
 }
-
-// try {
-//   const {action, year, month, day} = await DatePickerAndroid.open({
-//     mode: 'spinner',
-//   });
-
-//   if (action !== DatePickerAndroid.dismissedAction) {
-//     let date = new Date(year, month, day);
-//     let newDate = {};
-
-//     newDate['date'] = date;
-//     newDate['diaCompra'] = date.toLocaleDateString('en-US');
-//     this.setState(newDate);
-//   }
-// } catch ({code, message}) {
-//   alert(code, message);
-// }

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text, ActivityIndicator, DatePickerAndroid} from 'react-native';
+import {ActivityIndicator} from 'react-native';
 import firebase from 'react-native-firebase';
 
 import {
@@ -7,12 +7,8 @@ import {
   Content,
   TituloAdd,
   Input,
-  InputDate,
-  InputDateText,
   ButtonAdicionar,
   ButtonText,
-  Success,
-  TextSuccess,
 } from './style';
 
 import DateInput from '../../components/DateInput';
@@ -23,6 +19,10 @@ function Register({navigation}) {
   const [desc, setDesc] = useState('');
   const [valor, setValor] = useState('');
   const [loading, setLoading] = useState('');
+
+  /**
+   * Adiciona as Despesas, que o usuário deseja cadastrar
+   */
 
   function handleAddDespesa() {
     setLoading(true);
@@ -81,9 +81,5 @@ function Register({navigation}) {
     </Container>
   );
 }
-
-/**
- * Adiciona as Despesas, que o usuário deseja cadastrar
- */
 
 export default Register;

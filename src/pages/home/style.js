@@ -25,7 +25,7 @@ export const ListName = styled.Text`
   padding-top: 15px;
 `;
 
-export const DateOfBirth = styled.Text`
+export const AmountExpense = styled.Text`
   font-size: 14px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.8);
