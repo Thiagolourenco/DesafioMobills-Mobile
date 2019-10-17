@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, FlatList} from 'react-native';
 import firebase from 'react-native-firebase';
-import {format} from 'date-fns';
-import pt from 'date-fns/locale/pt';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 

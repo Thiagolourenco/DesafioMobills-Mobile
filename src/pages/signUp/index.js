@@ -9,7 +9,7 @@ import {
   ButtonText,
   ButtonCadastro,
   Title,
-  Success
+  Success,
 } from './style';
 
 function SignUp({navigation}) {
@@ -35,9 +35,9 @@ function SignUp({navigation}) {
             navigation.navigate('Login');
           }, 3000);
         })
-        .catch(error => alert(error));
-    } catch (e) {
-      alert(e);
+        .catch(error => alert(error.code));
+    } catch (error) {
+      alert(error.code);
     }
   }
 
@@ -72,9 +72,7 @@ function SignUp({navigation}) {
             <ButtonText>CADASTRAR</ButtonText>
           )}
         </ButtonCadastro>
-        {
-          loading ? <Success>Cadastro Realizado com sucesso</Success> : null
-        }
+        {loading ? <Success>Cadastro Realizado com sucesso</Success> : null}
       </Form>
     </Container>
   );
