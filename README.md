@@ -5,10 +5,10 @@ SOBRE
 
 Uma aplicação mobile desenvolvido em React Native, para solução de um desafio respectivo a uma vaga de 
 trabalho. O principal objetivo do app é fazer uma listagem das despesas cadastradas, adicionar novas despesas,
-como também atualizar dados como remover dados do cliente. 
+como também atualizar dados como remover dados da despesa. 
 
-OBS: Também foi adicionando uma tela de login e cadastro
-com o firebase.
+    * Para cadastro, update, listagem e delete foi usado o firebase/firestore
+    * Também foi adicionando uma tela de login e cadastro, junto ao firebase/auth
 
 Instruções
 
@@ -26,5 +26,6 @@ e adicionar o caminho do SDK do android.
      example: sdk.dir=/home/thiago/Android/Sdk
 
 após isso serguir os passos abaixo
+
     react-native start && react-native run-android
 
