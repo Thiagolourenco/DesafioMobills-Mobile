@@ -52,3 +52,10 @@ export const CadastrarText = styled.Text`
   font-weight: bold;
   margin-top: 120px;
 `;
+
+export const Success = styled.Text`
+  color: rgba(53, 175, 109, 0.94);
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+`;

@@ -4,6 +4,7 @@ import firebase from 'react-native-firebase';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import DateInput from '../../components/DateInput';
 import {format} from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import {
   Container,
@@ -28,10 +29,7 @@ function Updates({navigation}) {
   const [loading, setLoading] = useState(false);
   const [loadingUp, setLoadingUp] = useState(false);
 
-  /**
-   * ID da despesa, para realizar a atualizar ou remover
-   */
-  const id = navigation.getParam('id');
+  const id = navigation.getParam('id'); // ID da despesa, para realizar a atualizar ou remover
 
   /**
    * Carrega os dados do cliente, através do id
@@ -46,7 +44,9 @@ function Updates({navigation}) {
       setName(doc.data().name);
       setDesc(doc.data().descricao);
       setValor(doc.data().valor);
-      setDiaCompra(format(doc.data().diaCompra, "dd 'de' MMMM 'de' yyyy"));
+      setDiaCompra(
+        format(doc.data().diaCompra, "dd 'de' MMMM 'de' yyyy", {locale: pt}),
+      );
       setPago(doc.data().pago);
     });
   }, []);
@@ -79,6 +79,7 @@ function Updates({navigation}) {
 
   /*
    * Atualiza os Dados do cliente
+   * Melhorar Update na hora de atualizar a data da compra
    */
   async function handleUpdateDespesa(id) {
     setLoadingUp(true);

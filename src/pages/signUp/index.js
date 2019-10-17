@@ -9,6 +9,7 @@ import {
   ButtonText,
   ButtonCadastro,
   Title,
+  Success
 } from './style';
 
 function SignUp({navigation}) {
@@ -71,6 +72,9 @@ function SignUp({navigation}) {
             <ButtonText>CADASTRAR</ButtonText>
           )}
         </ButtonCadastro>
+        {
+          loading ? <Success>Cadastro Realizado com sucesso</Success> : null
+        }
       </Form>
     </Container>
   );
