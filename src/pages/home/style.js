@@ -11,7 +11,8 @@ export const List = styled.TouchableOpacity.attrs({
 })`
   height: 75px;
   width: 350px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: ${({pago}) =>
+    pago ? 'rgba(53, 175, 109, 0.70)' : 'rgba(192, 69, 69, 0.70)'};
   border-radius: 15px;
   margin-top: 25px;
   flex-direction: row;
@@ -20,15 +21,14 @@ export const List = styled.TouchableOpacity.attrs({
 export const ListName = styled.Text`
   font-size: 16px;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.8);
+  color: #fff;
   padding-left: 12px;
   padding-top: 15px;
 `;
 
 export const AmountExpense = styled.Text`
   font-size: 14px;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.8);
+  color: #fff;
   padding-left: 12px;
 `;
 

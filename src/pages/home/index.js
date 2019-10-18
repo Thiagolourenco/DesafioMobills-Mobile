@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, Text} from 'react-native';
 import firebase from 'react-native-firebase';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -69,7 +69,7 @@ function Home({navigation}) {
         data={data}
         style={{flex: 1}}
         renderItem={({item}) => (
-          <List onPress={() => handleUpdate(item.id)}>
+          <List onPress={() => handleUpdate(item.id)} pago={item.pago}>
             <View>
               <ListName>Nome: {item.name}</ListName>
               <AmountExpense>Valor: R$ {item.valor}</AmountExpense>
@@ -77,7 +77,6 @@ function Home({navigation}) {
           </List>
         )}
       />
-
       <Footer>
         <ButtonAdd onPress={handleCadastrar}>
           <Icon name="add" size={32} color="#fff" />
